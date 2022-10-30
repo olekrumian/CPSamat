@@ -159,25 +159,25 @@ input {
     flex-direction: column;
     align-items: center;
   }
-  .button,
-  .downloadexcel {
+  .ready_btn,
+  .export {
     width: 100%;
     margin: 0.45rem 0;
     padding: 1.6rem 0rem;
     border: none;
     color: #fff;
-    background-color: #007aea;
+    background-color: #0860a8;
     border-radius: 0.4rem;
     font-size: 1.6rem;
   }
   .remove_btn {
-    width: 35%;
+    width: 15%;
     margin: 0rem auto 0rem 0;
     padding: 0.5rem 0.5rem;
     border: none;
-    color: #007aea;
+    color: #0860a8;
     background-color: #fff;
-    border: 1px solid #007aea;
+    border: 1px solid #0860a8;
     border-radius: 0.4rem;
     font-size: 1.6rem;
     position: fixed;
@@ -213,7 +213,7 @@ input {
   }
   .calculate {
     padding: 0.6rem 0.5rem;
-    background-color: #007aea;
+    background-color: #0860a8;
     color: #fff;
     border-radius: 0.4rem;
     font-size: 1.6rem;

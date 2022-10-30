@@ -22,6 +22,7 @@ btnContainer.addEventListener('click', function (e) {
 
 //? Get element
 const input = document.querySelectorAll('input');
+const inputDate = document.querySelector('.date');
 const readyBtn = document.querySelector('.ready_btn');
 const xlsBtn = document.querySelector('.exportxls');
 const tbody = document.querySelector('.tbody');
@@ -31,25 +32,28 @@ const tbody = document.querySelector('.tbody');
 // removeButton
 //* Function
 // get time
-// function timeCount() {
-//   var today = new Date();
 
-//   var day = today.getDate();
-//   var month = today.getMonth() + 1;
-//   if (month < 10) month = '0' + month;
-//   var year = today.getFullYear();
+function timeCount() {
+  var today = new Date();
 
-//   var hour = today.getHours();
-//   if (hour < 10) hour = '0' + hour;
+  var day = today.getDate();
+  var month = today.getMonth() + 1;
+  if (month < 10) month = '0' + month;
+  var year = today.getFullYear();
 
-//   var minute = today.getMinutes();
-//   if (minute < 10) minute = '0' + minute;
+  var hour = today.getHours();
+  if (hour < 10) hour = '0' + hour;
 
-//   input[2].value = day + '.' + month + '.' + year + ' ' + hour + ':' + minute;
+  var min = today.getMinutes();
+  if (min < 10) min = '0' + min;
 
-//   setTimeout('timeCount()', 5000);
-// }
-// timeCount();
+  inputDate.value = `${day}.${month}.${year} ${hour}:${min}`;
+}
+timeCount();
+setInterval(timeCount, 60000);
+
+console.log(inputDate.value);
+
 function renderTab() {}
 function addToLocalStorage() {}
 function removeFromLocalStorage() {}

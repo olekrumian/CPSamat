@@ -39,12 +39,11 @@
           <option value="C.RO" />
         </datalist>
         <input type="number" inputmode="decimal" maxlength="7" class="kilometry" placeholder="Kilometry" />
-        <input class="data" />
+        <input id="date" class="date" />
         <input type="number" inputmode="decimal" class="operacji" placeholder="Ilosc operacji" />
         <input type="textarea" class="uwagi" placeholder="Uwagi" />
         <div class="button_wrapper">
           <button class="ready_btn">Gotowe</button>
-          <button class="exportxls">Export to excel</button>
         </div>
       </div>
 
@@ -63,9 +62,12 @@
         </table>
       </div>
       <div class="button_wrapper">
-        <button class="remove_btn">Wyzeruj</button>
+        <button class="remove_btn">Oczyszć</button>
         <div class="calculate"></div>
       </div>
+      <!-- <div class="button_wrapper">
+        <button class="export">Export to excel</button>
+      </div> -->
     </div>
     <div class="tab operacji" id="tabs">
       <form class="input form_operacji" data-id="operacji">
@@ -122,7 +124,7 @@
       </form>
       <p class="input_title-comentarz">Komentarz</p>
       <textarea name="" id="komentarz" class="input_textarea" placeholder="Uwagi"></textarea>
-      <button id="pdf" class="button">Export to PDF</button>
+      <button id="pdf" class="export">Export to excel</button>
       <div class="summa_wyplaty">
         <p class="wyplata">0</p>
       </div>
