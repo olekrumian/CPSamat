@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="./img/favicon/site.webmanifest" />
+  <link rel="mask-icon" href="./img/favicon/safari-pinned-tab.svg" color="#5bbad5" />
+  <meta name="msapplication-TileColor" content="#da532c" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="stylesheet" href="./src/style.css" />
+  <title>Praca</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="btn_container">
+      <button class="tab_btn active" data-id="inputs">Dom</button>
+      <button class="tab_btn" data-id="tabs">Tabela</button>
+    </div>
+    <div class="tab active" id="inputs">
+      <div class="form_wrapper">
+        <input class="miejsce" list="miejsce" placeholder="Miejsce" />
+        <datalist id="miejsce">
+          <option value="Valenciennes" />
+          <option value="Zeebrugge" />
+          <option value="Wallenius" />
+          <option value="ICO405" />
+          <option value="ICO502" />
+          <option value="C.RO" />
+        </datalist>
+        <input type="number" inputmode="decimal" maxlength="7" class="kilometry" placeholder="Kilometry" />
+        <input class="data" />
+        <input type="number" inputmode="decimal" class="operacji" placeholder="Ilosc operacji" />
+        <input type="textarea" class="uwagi" placeholder="Uwagi" />
+        <div class="button_wrapper">
+          <button class="button">Gotowe</button>
+          <button class="downloadexcel">Export to excel</button>
+        </div>
+      </div>
+
+      <div class="table_wrapper">
+        <table id="table" class="table">
+          <thead>
+            <tr>
+              <th>Miejsce</th>
+              <th>Kilometry</th>
+              <th>Data</th>
+              <th>Ilosc operacji</th>
+              <th>Uwagi</th>
+            </tr>
+          </thead>
+          <tbody class="tbody"></tbody>
+        </table>
+      </div>
+      <div class="button_wrapper">
+        <button class="remove_btn">Wyzeruj</button>
+        <div class="calculate"></div>
+      </div>
+    </div>
+    <div class="tab operacji" id="tabs">
+      <form class="input form_operacji" data-id="operacji">
+        <p class="input_title">Operacji</p>
+        <div class="input_wrapper">
+          <input id="hour" type="text" class="input input_value hourMatch" placeholder="Ilość" type="number"
+            inputmode="decimal">
+          <input id="hour" class="input input_goal hour" value="0"></input>
+        </div>
+      </form>
+      <form class="input form_operacji" data-id="uoperacji">
+        <p class="input_title">Operacji utracone</p>
+        <div class="input_wrapper">
+          <input id="halfhour" type="text" class="input input_value" placeholder="Ilość" type="number"
+            inputmode="decimal">
+          <input id="halfhour" class="input input_goal" value="0"></input>
+        </div>
+      </form>
+      <form class="input form_operacji" data-id="jazda">
+        <p class="input_title">Jazda</p>
+        <div class="input_wrapper">
+          <input id="drive" type="text" class="input input_value" placeholder="Godżiny" type="number">
+          <input id="drive" class="input input_goal" value="0"></input>
+        </div>
+      </form>
+      <form class="input form_operacji" data-id="ujazda">
+        <p class="input_title">Jazda utracone</p>
+        <div class="input_wrapper">
+          <input id="halfhour" type="text" class="input input_value" placeholder="Godżiny" type="number">
+          <input id="halfhour" class="input input_goal" value="0"></input>
+        </div>
+      </form>
+      <form class="input form_operacji" data-id="dyzur">
+        <p class="input_title">Dyżur</p>
+        <div class="input_wrapper">
+          <input id="payDays" type="text" class="input input_value" placeholder="Dni" type="number" inputmode="decimal">
+          <input id="payDays" class="input input_goal" value="0"></input>
+        </div>
+      </form>
+      <form class="input form_operacji" data-id="weekend">
+        <p class="input_title">Weekendy</p>
+        <div class="input_wrapper">
+          <input id="payDays" type="text" class="input input_value" placeholder="Dni" type="number" inputmode="decimal">
+          <input id="payDays" class="input input_goal" value="0"></input>
+        </div>
+      </form>
+      <form class="input form_operacji" data-id="premia">
+        <p class="input_title">Premia (dni pracy)</p>
+        <div class="input_wrapper">
+          <input id="premia" type="text" class="input input_value" placeholder="Ilość" type="number"
+            inputmode="decimal">
+          <input id="premia" class="input input_goal" value="0"></input>
+        </div>
+      </form>
+      <p class="input_title-comentarz">Komentarz</p>
+      <textarea name="" id="komentarz" class="input_textarea" placeholder="Uwagi"></textarea>
+      <button id="pdf" class="button">Export to PDF</button>
+      <div class="summa_wyplaty">
+        <p class="wyplata">0</p>
+      </div>
+      <table class="tableTab"></table>
+    </div>
+
+  </div>
+
+  <script type="module" src="./src/app.js"></script>
+  <script src="./src/table2excel.js"></script>
+</body>
+
+</html>
