@@ -7,8 +7,16 @@ html {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+:root {
+  --samat: #0860a8;
+  --grey: #7d7c82;
+  --nowhite: #f7f7f7;
+  --noblack: #222222;
+  --white: #ffffff;
+  --black: #000000;
+}
 body {
-  background-color: #fff;
+  background-color: var(--white);
   font-weight: 400;
   font-size: 1.6rem;
 }
@@ -17,7 +25,7 @@ input {
   border-radius: 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1920px) {
   .btn_container {
     margin: 4rem 0rem 0rem 0rem;
     padding: 0 2.5%;
@@ -30,11 +38,11 @@ input {
   .tab_btn {
     width: 100%;
     height: 100%;
-    /* border: 0.2rem solid #7d7c82; */
+    /* border: 0.2rem solid var(--grey); */
     border: none;
     border-radius: 0.4rem;
-    background-color: #f7f7f7;
-    color: #7d7c82;
+    background-color: var(--nowhite);
+    color: var(--grey);
     font-weight: 700;
     font-size: 1.4rem;
     line-height: 24px;
@@ -54,8 +62,8 @@ input {
   }
 
   .tab_btn.active {
-    background-color: #fff;
-    color: #000;
+    background-color: var(--white);
+    color: var(--black);
   }
 
   .form_operacji {
@@ -65,7 +73,7 @@ input {
     font-weight: 700;
     font-size: 1.4px;
     line-height: 1.7rem;
-    color: #222222;
+    color: var(--noblack);
   }
 
   .input_wrapper {
@@ -84,7 +92,7 @@ input {
     padding: 2rem 1.6rem;
     max-width: 50%;
     width: 100%;
-    background-color: #ffffff;
+    background-color: var(--white);
     border: 0.1rem solid #dfdfdf;
     border-radius: 0.4rem;
     text-align: center;
@@ -97,7 +105,7 @@ input {
   .input_textarea {
     margin: 1rem 0rem 0rem 0rem;
     padding: 1.6rem;
-    background-color: #f7f7f7;
+    background-color: var(--nowhite);
     border-radius: 0.4rem;
     width: 100%;
     height: 15rem;
@@ -109,7 +117,7 @@ input {
     align-items: center;
     width: 16rem;
     height: 6.3rem;
-    background-color: #222222;
+    background-color: var(--noblack);
     border-radius: 10rem;
   }
   .summa_wyplaty p {
@@ -117,7 +125,7 @@ input {
     font-size: 1.6rem;
     line-height: 1.9rem;
     letter-spacing: -0.02em;
-    color: #ffffff;
+    color: var(--white);
   }
 
   .container {
@@ -139,13 +147,13 @@ input {
     max-width: 95%;
     padding: 20px 16px;
     height: 64px;
-    background-color: #f7f7f7;
+    background-color: var(--nowhite);
     border-radius: 0.4rem;
     font-size: 1.6rem;
     line-height: 1.9rem;
     border: none;
     outline: none;
-    color: #7d7c82;
+    color: var(--grey);
   }
   input[type='datetime-local'] {
     padding: 0.5rem;
@@ -165,19 +173,19 @@ input {
     margin: 0.45rem 0;
     padding: 1.6rem 0rem;
     border: none;
-    color: #fff;
-    background-color: #0860a8;
+    color: var(--white);
+    background-color: var(--samat);
     border-radius: 0.4rem;
     font-size: 1.6rem;
   }
   .remove_btn {
-    width: 15%;
+    width: 20%;
     margin: 0rem auto 0rem 0;
     padding: 0.5rem 0.5rem;
     border: none;
-    color: #0860a8;
-    background-color: #fff;
-    border: 1px solid #0860a8;
+    color: var(--samat);
+    background-color: var(--white);
+    border: 1px solid var(--samat);
     border-radius: 0.4rem;
     font-size: 1.6rem;
     position: fixed;
@@ -199,7 +207,7 @@ input {
 
   .table thead tr th {
     font-weight: 700;
-    border-bottom: 1px solid #7d7c82;
+    border-bottom: 1px solid var(--grey);
   }
   td,
   th {
@@ -213,8 +221,8 @@ input {
   }
   .calculate {
     padding: 0.6rem 0.5rem;
-    background-color: #0860a8;
-    color: #fff;
+    background-color: var(--samat);
+    color: var(--white);
     border-radius: 0.4rem;
     font-size: 1.6rem;
     font-weight: 400;
