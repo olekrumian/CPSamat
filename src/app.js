@@ -21,6 +21,11 @@ btnContainer.addEventListener('click', function (e) {
 });
 
 //? Get element
+const input = document.querySelectorAll('input');
+const readyBtn = document.querySelector('.ready_btn');
+const xlsBtn = document.querySelector('.exportxls');
+const tbody = document.querySelector('.tbody');
+
 //* Event listener
 // addButton
 // removeButton
