@@ -86,9 +86,6 @@ function setUpTable() {
 
   tbody.appendChild(newTr);
 
-  const deleteBtn = newTr.querySelector('.usun');
-  deleteBtn.addEventListener('click', deleteItem);
-
   var values = {
     miejsce: miejsce,
     kilometry: kilometry,
@@ -98,7 +95,8 @@ function setUpTable() {
   };
 
   addToLocalStorage(id, values);
-  // window.location.reload();
+  sumaOperacji(getLocalStorage);
+  window.location.reload();
 }
 
 const fetchTable = () => {
@@ -129,15 +127,21 @@ const renderTab = (list) => {
     })
     .join('');
   tbody.innerHTML = tabList;
-};
 
-// delete item
-function deleteItem(e) {
-  const element = e.currentTarget.parentElement.parentElement;
-  const id = element.dataset.id;
-  tbody.removeChild(element);
-  removeFromLocalStorage(id);
-}
+  // delete item
+  const deleteBtn = document.querySelectorAll('.usun');
+  deleteBtn.forEach((element) => {
+    element.addEventListener('click', (e) => {
+      const element = e.currentTarget.parentElement.parentElement;
+      const id = element.dataset.id;
+
+      console.log(element);
+      tbody.removeChild(element);
+      removeFromLocalStorage(id);
+      sumaOperacji(getLocalStorage);
+    });
+  });
+};
 
 // add to localstorage
 function addToLocalStorage(id, value) {
