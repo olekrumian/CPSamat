@@ -13,7 +13,7 @@ const tab = document.querySelectorAll('.tab');
 // addButton
 readyBtn.addEventListener('click', setUpTable);
 removeBtn.addEventListener('click', clearLocalStorage);
-// window.addEventListener('DOMContentLoaded', renderTable);
+window.addEventListener('DOMContentLoaded', sumaOperacji);
 
 //* Function
 // switch tab
@@ -36,17 +36,17 @@ btnContainer.addEventListener('click', function (e) {
 
 // get time
 function timeCount() {
-  var today = new Date();
+  let today = new Date();
 
-  var day = today.getDate();
-  var month = today.getMonth() + 1;
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
   if (month < 10) month = '0' + month;
-  var year = today.getFullYear();
+  let year = today.getFullYear();
 
-  var hour = today.getHours();
+  let hour = today.getHours();
   if (hour < 10) hour = '0' + hour;
 
-  var min = today.getMinutes();
+  let min = today.getMinutes();
   if (min < 10) min = '0' + min;
 
   inputDate.value = `${day}.${month}.${year} ${hour}:${min}`;
@@ -56,7 +56,7 @@ setInterval(timeCount, 60000);
 
 // setup table
 function setUpTable() {
-  var newTr = document.createElement('tr');
+  const newTr = document.createElement('tr');
   newTr.classList.add('table_row');
   const id = new Date().getTime().toString();
   const atrr = document.createAttribute('data-id');
@@ -90,23 +90,52 @@ function setUpTable() {
   deleteBtn.addEventListener('click', deleteItem);
 
   var values = {
-    place: miejsce,
-    km: kilometry,
-    date: data,
-    used: operacji,
-    warning: uwagi,
+    miejsce: miejsce,
+    kilometry: kilometry,
+    data: data,
+    operacji: operacji,
+    uwagi: uwagi,
   };
 
   addToLocalStorage(id, values);
   // window.location.reload();
 }
 
+const fetchTable = () => {
+  const respons = localStorage.getItem('table');
+  const data = JSON.parse(respons);
+  renderTab(data);
+};
+
+document.addEventListener('DOMContentLoaded', fetchTable);
+
+const renderTab = (list) => {
+  const tabList = list
+    .map((item) => {
+      const {
+        id,
+        value: {miejsce, kilometry, data, operacji, uwagi},
+      } = item;
+      return `
+        <tr clas="table_row" data-id="${id}">
+        <td>${miejsce}</td>
+        <td>${kilometry}</td>
+        <td>${data}</td>
+        <td>${operacji}</td>
+        <td>${uwagi}</td>
+        <td><button class="usun"><img src="./img/trash.svg" alt=""></button></td>
+        </tr>
+        `;
+    })
+    .join('');
+  tbody.innerHTML = tabList;
+};
+
 // delete item
 function deleteItem(e) {
   const element = e.currentTarget.parentElement.parentElement;
   const id = element.dataset.id;
   tbody.removeChild(element);
-
   removeFromLocalStorage(id);
 }
 
@@ -144,6 +173,21 @@ function clearLocalStorage() {
   } else {
     window.location.reload();
   }
+}
+
+// Suma operacji
+function sumaOperacji() {
+  const suma = getLocalStorage();
+  let totalOperacji = 0;
+
+  if (suma.length > 0) {
+    suma.forEach((element) => {
+      totalOperacji += parseInt(element.value.operacji);
+    });
+  }
+  document.querySelector(
+    '.calculate'
+  ).innerHTML = `<p>Operacji: ${totalOperacji}</p>`;
 }
 
 function exportXls() {}
