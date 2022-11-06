@@ -8,12 +8,15 @@ const tbody = document.querySelector('.tbody');
 const btns = document.querySelectorAll('.tab_btn');
 const btnContainer = document.querySelector('.btn_container');
 const tab = document.querySelectorAll('.tab');
+const form = document.querySelectorAll('.form_operacji');
+const operacjiCalc = document.getElementById('hour');
 
 //* Event listener
 // addButton
 readyBtn.addEventListener('click', setUpTable);
 removeBtn.addEventListener('click', clearLocalStorage);
-window.addEventListener('DOMContentLoaded', sumaOperacji);
+xlsBtn.addEventListener('click', exportXls);
+document.addEventListener('DOMContentLoaded', getTotalOperacji);
 
 //* Function
 // switch tab
@@ -95,7 +98,7 @@ function setUpTable() {
   };
 
   addToLocalStorage(id, values);
-  sumaOperacji(getLocalStorage);
+  getTotalOperacji(getLocalStorage);
   window.location.reload();
 }
 
@@ -138,7 +141,7 @@ const renderTab = (list) => {
       console.log(element);
       tbody.removeChild(element);
       removeFromLocalStorage(id);
-      sumaOperacji(getLocalStorage);
+      getTotalOperacji(getLocalStorage);
     });
   });
 };
@@ -180,10 +183,10 @@ function clearLocalStorage() {
 }
 
 // Suma operacji
-function sumaOperacji() {
+function getTotalOperacji() {
+  const hourGoal = document.getElementsByClassName('hour');
   const suma = getLocalStorage();
   let totalOperacji = 0;
-
   if (suma.length > 0) {
     suma.forEach((element) => {
       totalOperacji += parseInt(element.value.operacji);
@@ -192,9 +195,61 @@ function sumaOperacji() {
   document.querySelector(
     '.calculate'
   ).innerHTML = `<p>Operacji: ${totalOperacji}</p>`;
+
+  if (!totalOperacji) {
+    operacjiCalc.value = 'Ilość';
+  } else {
+    operacjiCalc.value = totalOperacji;
+    hourGoal[0].value = totalOperacji * 42;
+  }
+  getTotal();
 }
 
-function exportXls() {}
-function getDataFromInput() {}
-function calcOperacji() {}
-function getTotal() {}
+form.forEach((element) => {
+  element.addEventListener('keyup', function (e) {
+    const value = e.target.value;
+    const inputValue = element.querySelector('.input_value');
+    const inputGoal = element.querySelector('.input_goal');
+    const drive = document.getElementById('drive');
+    const hour = document.getElementById('hour');
+    const halfhour = document.getElementById('halfhour');
+    const premia = document.getElementById('premia');
+    const payDays = document.getElementById('payDays');
+    if (inputValue.id === hour.id) {
+      inputGoal.value = value * 42;
+    } else if (inputValue.id === drive.id) {
+      function convertH2M(timeInHour) {
+        return Math.floor(timeInHour * 60);
+      }
+      var timeInMinutes = convertH2M(drive.value) * 0.7;
+      inputGoal.value = Math.ceil(timeInMinutes);
+    } else if (inputValue.id === halfhour.id) {
+      inputGoal.value = value * 21;
+    } else if (inputValue.id === premia.id) {
+      inputGoal.value = value * 100;
+    } else if (inputValue.id === payDays.id) {
+      inputGoal.value = value * 150;
+    } else {
+      console.log('error');
+    }
+    getTotal();
+  });
+});
+
+function getTotal() {
+  var arr = document.querySelectorAll('.input_goal');
+  var total = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (parseInt(arr[i].value)) {
+      total += parseInt(arr[i].value);
+    }
+  }
+  const btnSum = document.querySelector('.wyplata');
+  btnSum.innerHTML = total;
+}
+
+// export to xsl
+function exportXls() {
+  var table2excel = new Table2Excel();
+  table2excel.export(document.querySelectorAll('#table'));
+}
