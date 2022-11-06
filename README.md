@@ -1,3 +1,1 @@
-- WEB_Aplication 
-- for calculate working time and operations 
-- of truckdriver
+- WEB Application for calculate working time and operations of truck driver
