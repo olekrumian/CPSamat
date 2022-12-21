@@ -245,7 +245,7 @@ function getTotal() {
     }
   }
   const btnSum = document.querySelector('.wyplata');
-  btnSum.innerHTML = total;
+  btnSum.innerText = total;
 }
 
 // export to xsl
