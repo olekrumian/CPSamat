@@ -55,7 +55,7 @@ function timeCount() {
 
   inputDate.value = `${day}.${month}.${year} ${hour}:${min}`;
 
-  if (hour < 22) {
+  if (hour < 19) {
     body.classList.add('day-theme');
   } else if (hour > 8) {
     body.classList.add('night-theme');
