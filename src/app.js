@@ -10,6 +10,7 @@ const btnContainer = document.querySelector('.btn_container');
 const tab = document.querySelectorAll('.tab');
 const form = document.querySelectorAll('.form_operacji');
 const operacjiCalc = document.getElementById('hour');
+const body = document.querySelector('body');
 
 //* Event listener
 // addButton
@@ -53,6 +54,12 @@ function timeCount() {
   if (min < 10) min = '0' + min;
 
   inputDate.value = `${day}.${month}.${year} ${hour}:${min}`;
+
+  if (hour < 19) {
+    body.classList.add('day-theme');
+  } else if (hour > 8) {
+    body.classList.add('night-theme');
+  }
 }
 timeCount();
 setInterval(timeCount, 60000);
