@@ -60,7 +60,7 @@ input {
     /* border: 0.2rem solid var(--grey); */
     border: none;
     border-radius: 0.4rem;
-    background-color: var(--bg-color);
+    background-color: var(--nowhite-color);
     color: var(--grey-color);
     font-weight: 700;
     font-size: 1.4rem;
@@ -81,7 +81,7 @@ input {
   }
 
   .tab_btn.active {
-    background-color: var(--nowhite-color);
+    background-color: var(--bg-color);
     color: var(--font-color);
   }
 
@@ -144,7 +144,7 @@ input {
     font-size: 1.6rem;
     line-height: 1.9rem;
     letter-spacing: -0.02em;
-    color: var(--font-color);
+    color: var(--white);
   }
 
   .container {
@@ -192,7 +192,7 @@ input {
     margin: 0.45rem 0;
     padding: 1.6rem 0rem;
     border: none;
-    color: var(--nowhite-color);
+    color: var(--white);
     background-color: var(--samat);
     border-radius: 0.4rem;
     font-size: 1.6rem;
