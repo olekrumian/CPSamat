@@ -97,7 +97,7 @@ function setUpTable() {
 
   tbody.appendChild(newTr)
 
-  var values = {
+  const values = {
     miejsce: miejsce,
     kilometry: kilometry,
     data: data,
@@ -145,8 +145,6 @@ const renderTab = (list) => {
     element.addEventListener('click', (e) => {
       const element = e.currentTarget.parentElement.parentElement
       const id = element.dataset.id
-
-      console.log(element)
       tbody.removeChild(element)
       removeFromLocalStorage(id)
       getTotalOperacji(getLocalStorage)
@@ -167,6 +165,18 @@ function getLocalStorage() {
   return localStorage.getItem('table')
     ? JSON.parse(localStorage.getItem('table'))
     : []
+}
+
+const utracone = () => {
+  const array = getLocalStorage()
+
+  const arrayUtr = array.filter((elem) => elem.value.uwagi === 'utracone')
+  const utraconeTotal = arrayUtr.reduce((total, elem) => {
+    total += parseInt(elem.value.operacji)
+    return total
+  }, 0)
+
+  return utraconeTotal
 }
 
 // delete from localstorage
