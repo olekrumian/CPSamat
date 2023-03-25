@@ -12,6 +12,10 @@ const form = document.querySelectorAll('.form_operacji')
 const operacjiCalc = document.getElementById('hour')
 const body = document.querySelector('body')
 
+const outracone = document.querySelector('.outracone')
+const jutracone = document.querySelector('.jutracone')
+const inputGoal = document.querySelectorAll('.input_goal')
+
 //* Event listener
 // addButton
 readyBtn.addEventListener('click', setUpTable)
@@ -78,7 +82,15 @@ function setUpTable() {
   let kilometry = input[1].value
   let data = input[2].value
   let operacji = input[3].value
-  let uwagi = input[4].value
+  const uwagi = () => {
+    if (miejsce.includes('Operacji(Utracone)')) {
+      return 'O(Utracone)'
+    } else if (miejsce.includes('Jazda(Utracone)')) {
+      return 'J(Utracone)'
+    } else {
+      return ''
+    }
+  }
 
   if (!miejsce || !kilometry) return
 
@@ -102,7 +114,7 @@ function setUpTable() {
     kilometry: kilometry,
     data: data,
     operacji: operacji,
-    uwagi: uwagi,
+    uwagi: uwagi(),
   }
 
   addToLocalStorage(id, values)
@@ -170,13 +182,18 @@ function getLocalStorage() {
 const utracone = () => {
   const array = getLocalStorage()
 
-  const arrayUtr = array.filter((elem) => elem.value.uwagi === 'utracone')
-  const utraconeTotal = arrayUtr.reduce((total, elem) => {
+  const arrayJUtr = array.filter((elem) => elem.value.uwagi === 'J(Utracone)')
+  const arrayOUtr = array.filter((elem) => elem.value.uwagi === 'O(Utracone)')
+  const utraconeJazdaTotal = arrayJUtr.reduce((total, elem) => {
+    total += parseInt(elem.value.operacji)
+    return total
+  }, 0)
+  const utraconeOperacjiTotal = arrayOUtr.reduce((total, elem) => {
     total += parseInt(elem.value.operacji)
     return total
   }, 0)
 
-  return utraconeTotal
+  return [utraconeOperacjiTotal, utraconeJazdaTotal]
 }
 
 // delete from localstorage
@@ -202,6 +219,8 @@ function clearLocalStorage() {
 
 // Suma operacji
 function getTotalOperacji() {
+  //TODO
+  const [utraconeOperacjiTotal, utraconeJazdaTotal] = utracone()
   const hourGoal = document.getElementsByClassName('hour')
   const suma = getLocalStorage()
   let totalOperacji = 0
@@ -210,16 +229,24 @@ function getTotalOperacji() {
       totalOperacji += parseInt(element.value.operacji)
     })
   }
-  document.querySelector(
-    '.calculate'
-  ).innerHTML = `<p>Operacji: ${totalOperacji}</p>`
+  document.querySelector('.calculate').innerHTML = `<p>Operacji: ${
+    totalOperacji - utraconeOperacjiTotal - utraconeJazdaTotal
+  } Op.Utr: ${utraconeOperacjiTotal} Jaz.Utr: ${utraconeJazdaTotal} </p>`
 
   if (!totalOperacji) {
     operacjiCalc.value = 'Ilość'
   } else {
-    operacjiCalc.value = totalOperacji
-    hourGoal[0].value = totalOperacji * 42
+    operacjiCalc.value =
+      totalOperacji - utraconeOperacjiTotal - utraconeJazdaTotal
+    hourGoal[0].value =
+      (totalOperacji - utraconeOperacjiTotal - utraconeJazdaTotal) * 42
   }
+
+  outracone.value = utraconeOperacjiTotal
+  inputGoal[1].value = outracone.value * 21
+  jutracone.value = utraconeJazdaTotal
+  inputGoal[3].value = jutracone.value * 21
+
   getTotal()
 }
 
@@ -227,19 +254,20 @@ form.forEach((element) => {
   element.addEventListener('keyup', function (e) {
     const value = e.target.value
     const inputValue = element.querySelector('.input_value')
-    const inputGoal = element.querySelector('.input_goal')
+
     const drive = document.getElementById('drive')
     const hour = document.getElementById('hour')
     const halfhour = document.getElementById('halfhour')
     const premia = document.getElementById('premia')
     const payDays = document.getElementById('payDays')
+
     if (inputValue.id === hour.id) {
       inputGoal.value = value * 42
     } else if (inputValue.id === drive.id) {
       function convertH2M(timeInHour) {
         return Math.floor(timeInHour * 60)
       }
-      var timeInMinutes = convertH2M(drive.value) * 0.7
+      const timeInMinutes = convertH2M(drive.value) * 0.7
       inputGoal.value = Math.ceil(timeInMinutes)
     } else if (inputValue.id === halfhour.id) {
       inputGoal.value = value * 21
@@ -255,8 +283,8 @@ form.forEach((element) => {
 })
 
 function getTotal() {
-  var arr = document.querySelectorAll('.input_goal')
-  var total = 0
+  const arr = document.querySelectorAll('.input_goal')
+  let total = 0
   for (let i = 0; i < arr.length; i++) {
     if (parseInt(arr[i].value)) {
       total += parseInt(arr[i].value)
@@ -268,6 +296,6 @@ function getTotal() {
 
 // export to xsl
 function exportXls() {
-  var table2excel = new Table2Excel()
+  const table2excel = new Table2Excel()
   table2excel.export(document.querySelectorAll('#table'))
 }
