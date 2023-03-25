@@ -219,7 +219,6 @@ function clearLocalStorage() {
 
 // Suma operacji
 function getTotalOperacji() {
-  //TODO
   const [utraconeOperacjiTotal, utraconeJazdaTotal] = utracone()
   const hourGoal = document.getElementsByClassName('hour')
   const suma = getLocalStorage()
