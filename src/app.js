@@ -253,9 +253,9 @@ form.forEach((element) => {
   element.addEventListener('keyup', function (e) {
     const value = e.target.value
     const inputValue = element.querySelector('.input_value')
-
+    const inputGoal = element.querySelector('.input_goal')
     const drive = document.getElementById('drive')
-    const hour = document.getElementById('hour')
+    //FIXME: DRY // const hour = document.getElementById('hour')
     const halfhour = document.getElementById('halfhour')
     const premia = document.getElementById('premia')
     const payDays = document.getElementById('payDays')
@@ -277,6 +277,7 @@ form.forEach((element) => {
     } else {
       console.log('error')
     }
+
     getTotal()
   })
 })
