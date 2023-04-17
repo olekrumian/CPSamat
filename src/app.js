@@ -103,7 +103,7 @@ function setUpTable() {
               <td class="kilometry">${kilometry}</td>
               <td class="data">${data}</td>
               <td class="operacji">${operacji}</td>
-              <td class="uwagi">${uwagi}</td>
+              <td class="uwagi">${uwagi()}</td>
               <td><button class="usun"><img src="./img/trash.svg" alt=""></button></td>
   `
 
