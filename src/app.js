@@ -15,6 +15,10 @@ const body = document.querySelector('body')
 const outracone = document.querySelector('.outracone')
 const jutracone = document.querySelector('.jutracone')
 const inputGoal = document.querySelectorAll('.input_goal')
+const driveInput = document.querySelector('#drive')
+const dyzur = document.querySelector('.dyzur')
+const weekend = document.querySelector('.weekend')
+const premia = document.querySelector('.premia')
 
 //* Event listener
 // addButton
@@ -22,6 +26,13 @@ readyBtn.addEventListener('click', setUpTable)
 removeBtn.addEventListener('click', clearLocalStorage)
 xlsBtn.addEventListener('click', exportXls)
 document.addEventListener('DOMContentLoaded', getTotalOperacji)
+
+driveInput.addEventListener('keyup', (e) => {
+  const value = e.target.value
+  if (value.includes(',')) {
+    e.target.value = value.replace(',', '.')
+  }
+})
 
 //* Function
 // switch tab
@@ -87,6 +98,14 @@ function setUpTable() {
       return 'O(Utracone)'
     } else if (miejsce.includes('Jazda(Utracone)')) {
       return 'J(Utracone)'
+    } else if (miejsce.includes('Dyżur')) {
+      return 'Dyzur'
+    } else if (miejsce.includes('Weekendy')) {
+      return 'Weekend'
+    } else if (miejsce.includes('Premia')) {
+      return 'Premia'
+    } else if (miejsce.includes('Jazda')) {
+      return 'Jazda'
     } else {
       return ''
     }
@@ -182,8 +201,16 @@ function getLocalStorage() {
 const utracone = () => {
   const array = getLocalStorage()
 
+  const jazda = array.filter((elem) => elem.value.uwagi === 'Jazda')
   const arrayJUtr = array.filter((elem) => elem.value.uwagi === 'J(Utracone)')
   const arrayOUtr = array.filter((elem) => elem.value.uwagi === 'O(Utracone)')
+  const arrayDyzur = array.filter((elem) => elem.value.uwagi === 'Dyzur')
+  const arrayWeekend = array.filter((elem) => elem.value.uwagi === 'Weekend')
+  const arrayPremia = array.filter((elem) => elem.value.uwagi === 'Premia')
+  const jazdaTotal = jazda.reduce((total, elem) => {
+    total += parseInt(elem.value.operacji)
+    return total
+  }, 0)
   const utraconeJazdaTotal = arrayJUtr.reduce((total, elem) => {
     total += parseInt(elem.value.operacji)
     return total
@@ -192,8 +219,27 @@ const utracone = () => {
     total += parseInt(elem.value.operacji)
     return total
   }, 0)
+  const dyzurTotal = arrayDyzur.reduce((total, elem) => {
+    total += parseInt(elem.value.operacji)
+    return total
+  }, 0)
+  const weekendTotal = arrayWeekend.reduce((total, elem) => {
+    total += parseInt(elem.value.operacji)
+    return total
+  }, 0)
+  const premiaTotal = arrayPremia.reduce((total, elem) => {
+    total += parseInt(elem.value.operacji)
+    return total
+  }, 0)
 
-  return [utraconeOperacjiTotal, utraconeJazdaTotal]
+  return [
+    jazdaTotal,
+    utraconeOperacjiTotal,
+    utraconeJazdaTotal,
+    dyzurTotal,
+    weekendTotal,
+    premiaTotal,
+  ]
 }
 
 // delete from localstorage
@@ -219,7 +265,14 @@ function clearLocalStorage() {
 
 // Suma operacji
 function getTotalOperacji() {
-  const [utraconeOperacjiTotal, utraconeJazdaTotal] = utracone()
+  const [
+    jazdaTotal,
+    utraconeOperacjiTotal,
+    utraconeJazdaTotal,
+    dyzurTotal,
+    weekendTotal,
+    premiaTotal,
+  ] = utracone()
   const hourGoal = document.getElementsByClassName('hour')
   const suma = getLocalStorage()
   let totalOperacji = 0
@@ -229,22 +282,49 @@ function getTotalOperacji() {
     })
   }
   document.querySelector('.calculate').innerHTML = `<p>Operacji: ${
-    totalOperacji - utraconeOperacjiTotal - utraconeJazdaTotal
+    totalOperacji -
+    jazdaTotal -
+    utraconeOperacjiTotal -
+    utraconeJazdaTotal -
+    dyzurTotal -
+    weekendTotal -
+    premiaTotal
   } Op.Utr: ${utraconeOperacjiTotal} Jaz.Utr: ${utraconeJazdaTotal} </p>`
 
   if (!totalOperacji) {
     operacjiCalc.value = 'Ilość'
   } else {
     operacjiCalc.value =
-      totalOperacji - utraconeOperacjiTotal - utraconeJazdaTotal
+      totalOperacji -
+      jazdaTotal -
+      utraconeOperacjiTotal -
+      utraconeJazdaTotal -
+      dyzurTotal -
+      weekendTotal -
+      premiaTotal
     hourGoal[0].value =
-      (totalOperacji - utraconeOperacjiTotal - utraconeJazdaTotal) * 42
+      (totalOperacji -
+        jazdaTotal -
+        utraconeOperacjiTotal -
+        utraconeJazdaTotal -
+        dyzurTotal -
+        weekendTotal -
+        premiaTotal) *
+      42
   }
 
+  drive.value = jazdaTotal
+  inputGoal[2].value = drive.value * 42
   outracone.value = utraconeOperacjiTotal
   inputGoal[1].value = outracone.value * 21
   jutracone.value = utraconeJazdaTotal
   inputGoal[3].value = jutracone.value * 21
+  dyzur.value = dyzurTotal
+  inputGoal[4].value = dyzur.value * 150
+  weekend.value = weekendTotal
+  inputGoal[5].value = weekend.value * 150
+  premia.value = premiaTotal
+  inputGoal[6].value = premia.value * 100
 
   getTotal()
 }
